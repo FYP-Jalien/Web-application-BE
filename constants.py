@@ -1,0 +1,1 @@
+STATER_TEST="./index.sh"
