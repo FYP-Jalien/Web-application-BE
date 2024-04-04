@@ -1,5 +1,9 @@
 import subprocess
+
+from fastapi import HTTPException
+
 from schemas.container_schema import ContainerInformationSchema, ContainerSchema
+from env import SETTINGS
 
 
 class ContainerService:
@@ -28,3 +32,19 @@ class ContainerService:
             container_information=containers_details,
             error=result.stderr
         )
+
+    @staticmethod
+    def up_containers():
+        try:
+            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.JALIEN_SETUP_PATH}/bash/containers && ./up.sh"])
+            return {"message": "containers starting."}
+        except Exception as e:
+            raise HTTPException(500, detail=str(e))
+
+    @staticmethod
+    def down_containers():
+        try:
+            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.JALIEN_SETUP_PATH}/bash/containers && ./down.sh"])
+            return {"message": "containers stopping."}
+        except Exception as e:
+            raise HTTPException(500, detail=str(e))
