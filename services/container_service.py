@@ -36,7 +36,7 @@ class ContainerService:
     @staticmethod
     def up_containers():
         try:
-            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.JALIEN_SETUP_PATH}/bash/containers && ./up.sh"])
+            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.SHARED_VOLUME} && docker compose up -d"])
             return {"message": "containers starting."}
         except Exception as e:
             raise HTTPException(500, detail=str(e))
@@ -44,7 +44,7 @@ class ContainerService:
     @staticmethod
     def down_containers():
         try:
-            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.JALIEN_SETUP_PATH}/bash/containers && ./down.sh"])
+            subprocess.Popen(["sh", "-c", f"cd {SETTINGS.SHARED_VOLUME} && docker compose down"])
             return {"message": "containers stopping."}
         except Exception as e:
             raise HTTPException(500, detail=str(e))
