@@ -17,3 +17,8 @@ async def container_up():
 @router.get("/down")
 async def container_down():
     return ContainerService().down_containers()
+
+
+@router.get("/terminal/{container_id}")
+async def container_terminal(container_id: str):
+    return ContainerService().open_terminal(container_id)

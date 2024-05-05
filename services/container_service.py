@@ -48,3 +48,11 @@ class ContainerService:
             return {"message": "containers stopping."}
         except Exception as e:
             raise HTTPException(500, detail=str(e))
+
+    @staticmethod
+    def open_terminal(container_id: str):
+        try:
+            subprocess.Popen(["sh", "-c", f"gnome-terminal -- docker exec -it {container_id} /bin/bash"])
+            return {"message": "terminal opened."}
+        except Exception as e:
+            raise HTTPException(500, detail=str(e))
